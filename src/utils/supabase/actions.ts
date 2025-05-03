@@ -180,3 +180,15 @@ export async function deleteActionItem(id: string) {
   if (error) return { error: error.message };
   return { success: true };
 }
+
+// Auth: Sign Out
+export async function signOutAction() {
+  "use client";
+  const { createClient } = await import("~/utils/supabase/client");
+  const supabase = createClient();
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    return { error: error.message };
+  }
+  return { success: true };
+}

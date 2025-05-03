@@ -27,3 +27,8 @@
   --color-s23: #901767;
   --color-s24: #4f0937;
 }
+
+.EmailBody a {
+  color: #2563eb; /* Tailwind blue-600 */
+  text-decoration: underline;
+}

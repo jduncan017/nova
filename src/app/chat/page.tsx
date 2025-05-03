@@ -1,27 +1,9 @@
-import Link from "next/link";
+import Sidebar from "./Sidebar";
 
 export default function ChatPage() {
   return (
     <main className="ChatContainer bg-g4 flex h-full grow">
-      {/* Sidebar */}
-      <div className="Sidebar bg-g5 flex w-64 flex-col p-4">
-        <div className="ChatHistory flex-1">
-          <div className="text-g1 text-sm font-medium">Recent Chats</div>
-          {/* Placeholder for chat history */}
-          <div className="mt-2 space-y-1">
-            <div className="text-g2 hover:bg-g4 cursor-pointer rounded-md px-3 py-2 text-sm">
-              New Chat
-            </div>
-          </div>
-        </div>
-
-        <div className="SidebarFooter mt-auto">
-          <Link href="/login" className="text-g1 hover:text-p1 text-sm">
-            Sign Out
-          </Link>
-        </div>
-      </div>
-
+      <Sidebar />
       {/* Main Chat Area */}
       <div className="ChatMain flex flex-1 flex-col">
         <div className="ChatMessages flex-1 overflow-y-auto p-4">

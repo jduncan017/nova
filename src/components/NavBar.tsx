@@ -7,6 +7,14 @@ import Image from "next/image";
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const pages = [
+    { name: "Chat", href: "/chat" },
+    { name: "Inbox", href: "/inbox" },
+    // { name: "Calendar", href: "/calendar" },
+    // { name: "Tasks", href: "/tasks" },
+    // { name: "Settings", href: "/settings" },
+  ];
+
   return (
     <header className="NavBar bg-g5 text-n1 shadow-md">
       <nav className="mx-auto px-4 py-2.5 sm:px-6 lg:px-8">
@@ -25,9 +33,13 @@ export default function NavBar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
+            {pages.map((page) => (
+              <Link key={page.name} href={page.href}>
+                <p className="text-n1">{page.name}</p>
+              </Link>
+            ))}
             <div className="SidebarHeader">
-              <h1 className="text-p1 text-2xl font-bold">Nova Assistant</h1>
-              <span className="text-g1 text-sm">DigitalNova Studio</span>
+              <h1 className="text-p1 text-2xl font-bold">Nova AI Assistant</h1>
             </div>
           </div>
 
@@ -48,7 +60,13 @@ export default function NavBar() {
         {/* Mobile Navigation Menu */}
         {isOpen && (
           <div className="MobileNavMenu mt-4 pb-4 md:hidden">
-            <div className="flex flex-col space-y-4"></div>
+            <div className="flex flex-col space-y-4">
+              {pages.map((page) => (
+                <Link key={page.name} href={page.href}>
+                  <p className="text-n1">{page.name}</p>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </nav>

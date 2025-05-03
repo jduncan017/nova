@@ -21,9 +21,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body className="bg-g4 flex min-h-screen flex-col">
+      <body className="bg-g4 flex h-screen min-h-screen flex-col overflow-hidden">
         <NavBar />
-        {children}
+        <div className="flex h-[calc(100vh-79px)] w-full">{children}</div>
         <Toaster
           position="top-center"
           reverseOrder={false}

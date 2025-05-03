@@ -32,7 +32,7 @@ export default function ButtonComponent({
   return (
     <button
       className={cn(
-        "ButtonComponent h-fit max-w-[400px] rounded-md transition-colors duration-300 hover:cursor-pointer",
+        "ButtonComponent flex h-fit w-fit items-center justify-center gap-2 rounded-sm transition-colors duration-300 hover:cursor-pointer",
         !disabled && styles[style],
         disabled && "bg-n3 text-n1 hover:bg-n3 cursor-not-allowed",
         sizes[size],
