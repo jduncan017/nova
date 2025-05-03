@@ -1,0 +1,83 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Supabase Setup Rules
+
+## Project Structure
+- `src/utils/supabase/client.ts` - Browser client for client-side operations
+- `src/utils/supabase/server.ts` - Server client for server-side operations
+- `src/utils/supabase/middleware.ts` - Middleware for session management
+- `src/middleware.ts` - Main middleware configuration
+
+## Key Implementation Details
+1. **Client vs Server Usage**
+   - Use `createClient()` from `~/utils/supabase/client.ts` for client-side operations
+   - Use `createClient()` from `~/utils/supabase/server.ts` for server-side operations
+   - Never mix client and server Supabase instances
+
+2. **Authentication Flow**
+   - Always use `supabase.auth.getUser()` for authentication checks
+   - Never use `supabase.auth.getSession()` in server code
+   - Middleware handles session refresh and cookie management
+
+3. **Cookie Management**
+   - Cookies are managed through middleware
+   - Server components can read but not write cookies
+   - Cookie operations are handled in `middleware.ts`
+
+4. **Route Protection**
+   - Protected routes are handled in `middleware.ts`
+   - Exclude public routes (login, signup) from middleware checks
+   - Always verify user authentication on protected routes
+
+5. **Error Handling**
+   - Handle Supabase errors appropriately
+   - Redirect to login on authentication failures
+   - Log errors for debugging
+
+## Best Practices
+1. Always use the correct client for the context (client.ts or server.ts)
+2. Keep authentication logic in middleware
+3. Use proper error handling for Supabase operations
+4. Follow the established file structure
+5. Document any new Supabase-related utilities
+
+# Supabase Usage Rule for Next.js App Router (SSR)
+
+- Always use the `createClient` function from `~/utils/supabase/server` for server-side actions and server components.
+- Always use the `createClient` function from `~/utils/supabase/client` for client-side components.
+- Do not manually instantiate or configure the Supabase client in actions or components; always use the provided utility.
+- For server actions, call `const supabase = await createClient();` at the top of the function.
+- Use the Supabase client for all auth and data operations (sign up, sign in, sign out, get user, etc).
+- For admin operations, use a separate admin client (e.g., `supabaseAdmin`).
+- Use FormData for server actions that handle form submissions.
+- Always handle and return errors in a user-friendly way.
+- Use Next.js utilities like `redirect`, `revalidatePath`, and `cookies` as needed for navigation and session management.
+- Never use `supabase.auth.getSession()` for authentication checks in server code; always use `supabase.auth.getUser()`.
+
+## Example pattern for a server action:
+
+```ts
+"use server";
+import { createClient } from "~/utils/supabase/server";
+
+export async function signUpAction(formData: FormData) {
+  const supabase = await createClient();
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    // ...other options
+  });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return { success: true };
+}
+```

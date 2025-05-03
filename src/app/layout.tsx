@@ -3,6 +3,7 @@ import NavBar from "~/components/NavBar";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -23,6 +24,11 @@ export default function RootLayout({
       <body className="bg-g4 flex min-h-screen flex-col">
         <NavBar />
         {children}
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          containerStyle={{ top: "8vh" }}
+        />
       </body>
     </html>
   );
